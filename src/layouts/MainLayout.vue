@@ -12,7 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" alt="Quasar Logo" />
+          </q-avatar>
+          Admin Panel
         </q-toolbar-title>
 
         <q-space />
@@ -50,9 +53,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed} from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-import api from '/api/api.js'
 
 const leftDrawerOpen = ref(false)
 const selectedLanguage = ref('en') // Default language
@@ -61,32 +63,32 @@ const linksListEN = [
   { title: 'Dashboard',
      caption: 'Overview of sales, employees, and reports',
      icon: 'dashboard',
-    link: ''
+    link: '/Dashboard'
   },
   {  title: 'Employees',
      caption: 'Add, edit, and manage employee details',
      icon: 'badge',
-    link: ''
+    link: '/Employees'
   },
   {  title: 'Sales',
      caption: 'View and track sales records',
      icon: 'attach_money',
-    link: ''
+    link: '/Sales'
   },
   {  title: 'Reports & Analytics',
      caption: 'Generate performance reports',
      icon: 'bar_chart',
-    link: ''
+    link: '/ReportsAndAnalytics'
   },
   {  title: 'User Management',
      caption: 'Manage admin & staff roles (if needed)',
      icon: 'supervisor_account',
-    link: ''
+    link: '/UserManagement'
   },
   {  title: 'Settings',
      caption: 'Configure system preferences',
      icon: 'settings',
-    link: ''
+    link: '/Settings'
   },
   {  title: 'Logout',
      caption: '',
@@ -146,18 +148,4 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-const user = ref({})
-
-const fetchMockData = async () => {
-  try {
-    const response = await api.getUser()
-    user.value = response.data.user
-  } catch (error) {
-    console.error('Error fetching mock data:', error)
-  }
-}
-
-onMounted(() => {
-  fetchMockData()
-})
 </script>
