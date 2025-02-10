@@ -15,24 +15,28 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-space />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+        <q-item-label header>Admin
+          <q-btn-toggle style="float: right;"
+            v-model="selectedLanguage"
+            toggle-color="light-blue"
+            :options="[
+              {label: '🇬🇧 EN', value: 'en'},
+              {label: '🇮🇹 IT', value: 'it'}
+            ]"
+            dense
+            unelevated
+          />
+
         </q-item-label>
 
         <EssentialLink
-          v-for="link in linksList"
+          v-for="link in currentLinks"
           :key="link.title"
           v-bind="link"
         />
@@ -46,57 +50,114 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import api from '/api/api.js'
 
-const linksList = [
+const leftDrawerOpen = ref(false)
+const selectedLanguage = ref('en') // Default language
+
+const linksListEN = [
+  { title: 'Dashboard',
+     caption: 'Overview of sales, employees, and reports',
+     icon: 'dashboard',
+    link: ''
+  },
+  {  title: 'Employees',
+     caption: 'Add, edit, and manage employee details',
+     icon: 'badge',
+    link: ''
+  },
+  {  title: 'Sales',
+     caption: 'View and track sales records',
+     icon: 'attach_money',
+    link: ''
+  },
+  {  title: 'Reports & Analytics',
+     caption: 'Generate performance reports',
+     icon: 'bar_chart',
+    link: ''
+  },
+  {  title: 'User Management',
+     caption: 'Manage admin & staff roles (if needed)',
+     icon: 'supervisor_account',
+    link: ''
+  },
+  {  title: 'Settings',
+     caption: 'Configure system preferences',
+     icon: 'settings',
+    link: ''
+  },
+  {  title: 'Logout',
+     caption: '',
+     icon: 'logout',
+    link: '' }
+]
+
+const linksListIT = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Dashboard',
+     caption: 'Panoramica di vendite, dipendenti e report',
+     icon: 'dashboard',
+     link: ''
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Dipendenti',
+     caption: 'Aggiungi, modifica e gestisci i dettagli dei dipendenti',
+     icon: 'badge',
+     link: ''
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Vendite',
+     caption: 'Visualizza e monitora i record delle vendite',
+     icon: 'attach_money',
+     link: ''
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Report e Analisi',
+     caption: 'Genera report sulle prestazioni',
+     icon: 'bar_chart',
+     link: ''
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    title: 'Gestione Utenti',
+     caption: 'Gestisci ruoli di amministratori e personale (se necessario)',
+     icon: 'supervisor_account',
+     link: ''
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    title: 'Impostazioni',
+     caption: 'Configura le preferenze di sistema',
+     icon: 'settings',
+     link: ''
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Esci',
+     caption: '',
+     icon: 'logout',
+     link: ''
   }
 ]
 
-const leftDrawerOpen = ref(false)
+// Computed property to switch menu based on selected language
+const currentLinks = computed(() => selectedLanguage.value === 'en' ? linksListEN : linksListIT)
 
-function toggleLeftDrawer () {
+function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+const user = ref({})
+
+const fetchMockData = async () => {
+  try {
+    const response = await api.getUser()
+    user.value = response.data.user
+  } catch (error) {
+    console.error('Error fetching mock data:', error)
+  }
+}
+
+onMounted(() => {
+  fetchMockData()
+})
 </script>
