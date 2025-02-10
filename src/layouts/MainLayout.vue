@@ -24,21 +24,11 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header>Admin
-          <q-btn-toggle style="float: right;"
-            v-model="selectedLanguage"
-            toggle-color="light-blue"
-            :options="[
-              {label: '🇬🇧 EN', value: 'en'},
-              {label: '🇮🇹 IT', value: 'it'}
-            ]"
-            dense
-            unelevated
-          />
-
+        <q-item-label header>
+          Admin
         </q-item-label>
 
-        <EssentialLink
+        <DashboardLinks
           v-for="link in currentLinks"
           :key="link.title"
           v-bind="link"
@@ -54,8 +44,7 @@
 
 <script setup>
 import { ref, computed} from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
+import DashboardLinks from 'components/DashboardLinks.vue'
 const leftDrawerOpen = ref(false)
 const selectedLanguage = ref('en') // Default language
 

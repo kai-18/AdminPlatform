@@ -2,7 +2,6 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
     :href="props.link"
   >
     <q-item-section
@@ -42,3 +41,11 @@ const props = defineProps({
   }
 })
 </script>
+<style scoped>
+/* Highlight active link */
+.active-link {
+  background-color: #e0f7fa; /* Light Blue */
+  color: #00796b; /* Darker shade */
+  border-radius: 8px;
+}
+</style>
