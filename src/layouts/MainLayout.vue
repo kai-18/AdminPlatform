@@ -2,20 +2,13 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-avatar>
+          <!-- <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" alt="Quasar Logo" />
-          </q-avatar>
-          Admin Panel
+          </q-avatar> -->
+          Admin Platform
         </q-toolbar-title>
 
         <q-space />
@@ -28,11 +21,7 @@
           Admin
         </q-item-label>
 
-        <DashboardLinks
-          v-for="link in currentLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <DashboardLinks v-for="link in currentLinks" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
 
@@ -43,90 +32,98 @@
 </template>
 
 <script setup>
-import { ref, computed} from 'vue'
+import { ref, computed } from 'vue'
 import DashboardLinks from 'components/DashboardLinks.vue'
 const leftDrawerOpen = ref(false)
 const selectedLanguage = ref('en') // Default language
 
 const linksListEN = [
-  { title: 'Dashboard',
-     caption: 'Overview of sales, employees, and reports',
-     icon: 'dashboard',
+  {
+    title: 'Dashboard',
+    caption: 'Overview of sales, employees, and reports',
+    icon: 'dashboard',
     link: '/Dashboard'
   },
-  {  title: 'Employees',
-     caption: 'Add, edit, and manage employee details',
-     icon: 'badge',
+  {
+    title: 'Employees',
+    caption: 'Add, edit, and manage employee details',
+    icon: 'badge',
     link: '/Employees'
   },
-  {  title: 'Sales',
-     caption: 'View and track sales records',
-     icon: 'attach_money',
+  {
+    title: 'Sales',
+    caption: 'View and track sales records',
+    icon: 'attach_money',
     link: '/Sales'
   },
-  {  title: 'Reports & Analytics',
-     caption: 'Generate performance reports',
-     icon: 'bar_chart',
+  {
+    title: 'Reports & Analytics',
+    caption: 'Generate performance reports',
+    icon: 'bar_chart',
     link: '/ReportsAndAnalytics'
   },
-  {  title: 'User Management',
-     caption: 'Manage admin & staff roles (if needed)',
-     icon: 'supervisor_account',
+  {
+    title: 'User Management',
+    caption: 'Manage admin & staff roles (if needed)',
+    icon: 'supervisor_account',
     link: '/UserManagement'
   },
-  {  title: 'Settings',
-     caption: 'Configure system preferences',
-     icon: 'settings',
+  {
+    title: 'Settings',
+    caption: 'Configure system preferences',
+    icon: 'settings',
     link: '/Settings'
   },
-  {  title: 'Logout',
-     caption: '',
-     icon: 'logout',
-    link: '' }
+  {
+    title: 'Logout',
+    caption: '',
+    icon: 'logout',
+    link: ''
+  }
 ]
 
 const linksListIT = [
   {
     title: 'Dashboard',
-     caption: 'Panoramica di vendite, dipendenti e report',
-     icon: 'dashboard',
-     link: ''
+    caption: 'Panoramica di vendite, dipendenti e report',
+    icon: 'dashboard',
+    link: ''
   },
   {
     title: 'Dipendenti',
-     caption: 'Aggiungi, modifica e gestisci i dettagli dei dipendenti',
-     icon: 'badge',
-     link: ''
+    caption: 'Aggiungi, modifica e gestisci i dettagli dei dipendenti',
+    icon: 'badge',
+    link: ''
   },
   {
     title: 'Vendite',
-     caption: 'Visualizza e monitora i record delle vendite',
-     icon: 'attach_money',
-     link: ''
+    caption: 'Visualizza e monitora i record delle vendite',
+    icon: 'attach_money',
+    link: ''
   },
   {
     title: 'Report e Analisi',
-     caption: 'Genera report sulle prestazioni',
-     icon: 'bar_chart',
-     link: ''
+    caption: 'Genera report sulle prestazioni',
+    icon: 'bar_chart',
+    link: ''
   },
   {
     title: 'Gestione Utenti',
-     caption: 'Gestisci ruoli di amministratori e personale (se necessario)',
-     icon: 'supervisor_account',
-     link: ''
+    caption: 'Gestisci ruoli di amministratori e personale (se necessario)',
+    icon: 'supervisor_account',
+    link: ''
   },
   {
     title: 'Impostazioni',
-     caption: 'Configura le preferenze di sistema',
-     icon: 'settings',
-     link: ''
+    caption: 'Configura le preferenze di sistema',
+    icon: 'settings',
+    link: ''
   },
   {
     title: 'Esci',
-     caption: '',
-     icon: 'logout',
-     link: ''
+    caption: '',
+    icon: 'logout',
+    link: ''
   }
 ]
 
